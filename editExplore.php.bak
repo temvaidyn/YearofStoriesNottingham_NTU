@@ -1,0 +1,26 @@
+<?php
+session_start();
+include "connect.php";
+
+if(isset($_POST["exploreID"])){
+	$exploreID = $_POST["exploreID"];
+}
+
+if(isset($_POST["exploreTitle"])){
+	$exploreTitle = $_POST["exploreTitle"];
+	$exploreDescription = str_replace("'","\'",$exploreTitle);
+}
+	
+if(isset($_POST["exploreDescription"])){
+	$exploreDescription = $_POST["exploreDescription"];
+	$exploreDescription = str_replace("'","\'",$exploreDescription);
+}
+
+if(isset($_POST["exploreLink"])){
+	$exploreLink = $_POST["exploreLink"];
+}
+
+$sql = "UPDATE explore SET title = '".$exploreTitle."', link = '".$exploreLink."', description = '".$exploreDescription."' WHERE ID = '".$exploreID."'";
+mysqli_query($con, $sql);
+header("Location: viewExplorePage.php");
+

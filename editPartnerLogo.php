@@ -1,0 +1,14 @@
+<?php
+include "connect.php";
+
+if(isset($_POST["partnerID"])){
+	$partnerID = $_POST["partnerID"];
+}
+
+if(isset($_POST["partnerLogo"])){
+	$partnerLogo = $_POST["partnerLogo"];
+}
+
+$sql = "UPDATE partners SET image = '".$partnerLogo."' WHERE ID = '".$partnerID."'";
+mysqli_query($con, $sql);
+header("Location: viewPartnersPage.php");

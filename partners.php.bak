@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title> Partners - Year of Stories</title> 
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="stylesheet.css"> <!-- link to stylesheet */-->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,600&display=swap" rel="stylesheet"> <!-- Link to the font -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+</body>
+
+<div class="header"> <!-- header which contains nav bar or burger bar on smaller screens */-->
+
+<div class="navBar"> <!-- navbar for screens larger than 910px */-->
+  <div id="nav">
+      <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="activities.php">What's On</a></li>
+        <li><a href="exploreUs.php">Explore Us</a></li>
+        <li><a href="partners.php">Our Partners</a></li>
+      </ul>
+    </div>
+</div>
+<img id="burgerBar" src="img/hamburgerIcon.jpg" onclick="navBarVisibility()">
+</div>
+<div class="navBar2"> <!-- vertical navbar displayed outside header displayed on screens smaller than 910px */-->
+	<div id="nav2">
+			<ul>
+				<li><a href="index.php">Home</a></li>
+				<li><a href="activities.php">What's On</a></li>
+				<li><a href="exploreUs.php">Explore Us</a></li>
+				<li><a href="partners.php">Our Partners</a></li>
+			</ul>
+		</div>
+</div>
+
+<div class="banner">
+    <img class="banner-image" src="img/ourpartners1.jpg">
+</div>
+
+<h1 class="title">Our Partners</h1>
+
+<?php
+include "connect.php";
+
+$sql = "SELECT * FROM partners";
+$result = mysqli_query($con, $sql);
+if(mysqli_num_rows($result) > 0){
+	while($row = mysqli_fetch_assoc($result)){
+		echo "<div class='partnerDiv'>".
+		"<a href='".$row["link"]."'>".
+		"<br><img class='partnerImage' src='img/".$row['image']."' target='_blank'>".
+		"<br><p>".$row['name']."</p>".
+		"</div>";
+	}
+}
+
+?>
+
+<!-- Partners -->
+
+
+<!-- Call to Action -->
+<div class="cta">
+	<h1>Our mission</h1> <br>
+	<p> Lorem ipsum dolor sit amet. Et magnam adipisci ab sequi fuga et consequatur harum ut illo libero. Ex praesentium voluptatibus id cupiditate tenetur et delectus esse eos quam impedit aut voluptatem error est vitae voluptatum. Non iste sunt 33 doloremque excepturi vel eius alias eum commodi voluptatem id veniam eveniet non rerum blanditiis qui tenetur doloribus. Est tempora harum aut odit consectetur qui exercitationem dolores quo ipsam velit At nobis consequatur? </p>
+</div>
+
+<!-- Promote-video part -->
+<section class="promoteVideo">
+<iframe id="youtubeVideo" title="Small Talk project by Nottingham Literacy Trust..." width="75%" height="600" 
+src="https://www.youtube.com/embed/70EvifHiDWQ" frameborder="0" 
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen="">
+</iframe>
+</section>
+
+<!-- social media section -->
+<section class="socialmedia">
+<h2>Follow Us On Our Social Networks</h2>
+<a href="https://www.facebook.com/nationalliteracytrust/" class="fa fa-facebook"  target="_blank"></a>
+<a href="http://www.twitter.com/Literacy_Trust" class="fa fa-twitter"  target="_blank"></a>
+<a href="http://www.instagram.com/literacy_trust/" class="fa fa-instagram"  target="_blank"></a>
+<a href="https://www.youtube.com/user/LiteracyTrust" class="fa fa-youtube"  target="_blank"></a>
+</section>
+
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+      <h3>Year of Stories 2023</h3>
+      <p>&copy;2022 Copyright. Keep Calm and Never Copy-Paste Without Permission.  || <a href='adminLogon.php'> Admin </p>
+  </div>
+</footer>
+</body>
+<script language="javaScript">
+	function navBarVisibility() { //function controlling visibility of navbar2 on smaller screens on clicking the burger bar
+		var horiNavBar = document.querySelector(".navBar2");
+		if (horiNavBar.style.display == "block") {
+			horiNavBar.style.display = "none";
+			console.log(horiNavBar);
+		}
+		
+		else {
+			horiNavBar.style.display = "block";
+			console.log(horiNavBar);
+		}
+	}
+</script>

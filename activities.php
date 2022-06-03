@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title> Activities - Year of Stories</title> 
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="stylesheet.css"> <!-- link to stylesheet */-->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,600&display=swap" rel="stylesheet"> <!-- Link to the font -->
+</head>
+</body>
+
+<div class="header"> <!-- header which contains nav bar or burger bar on smaller screens */-->
+
+<div class="navBar"> <!-- navbar for screens larger than 910px */-->
+  <div id="nav">
+      <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="activities.php">What's On</a></li>
+        <li><a href="exploreUs.php">Explore Us</a></li>
+        <li><a href="partners.php">Our Partners</a></li>
+      </ul>
+    </div>
+</div>
+<img id="burgerBar" src="img/hamburgerIcon.jpg" onclick="navBarVisibility()">
+</div>
+<div class="navBar2"> <!-- vertical navbar displayed outside header displayed on screens smaller than 910px */-->
+	<div id="nav2">
+			<ul>
+				<li><a href="index.php">Home</a></li>
+				<li><a href="activities.php">What's On</a></li>
+				<li><a href="exploreUs.php">Explore Us</a></li>
+				<li><a href="partners.php">Our Partners</a></li>
+			</ul>
+		</div>
+</div>
+
+<h1 class="title"> View our Activities </h1>
+
+<form id="searchForm" action="activities.php" method="GET">
+<input id="search" type="text" placeholder="Search Events..." name="searchBar">
+<input id="searchButton" type="submit" value="Search">
+</form>
+
+<form id="orderForm" action="activities.php" method="GET">
+<label for="order">Order By:</label>
+<select id="order" name="listOrder">
+<option value="date">Event Date</option>
+<option value="name">A - Z</option>
+<option value="name DESC">Z - A</option>
+<option value="noOfSpaces DESC">Number of Spaces</option>
+</select>
+<input type="submit" value="Change Order">
+</form>
+
+<?php
+include "connect.php";
+if(isset($_REQUEST["searchBar"])){
+	$searchBar = $_REQUEST["searchBar"];
+	$sql =  "SELECT * FROM activities WHERE LOWER(name) LIKE LOWER('%$searchBar%') ORDER BY date";
+}
+else if(isset($_REQUEST["listOrder"])) {
+	$listOrder = $_REQUEST["listOrder"];
+	if ($listOrder == "date") {
+		$sql =  "SELECT * FROM activities ORDER BY date";
+	}
+	if ($listOrder == "name") {
+		$sql =  "SELECT * FROM activities ORDER BY name";
+	}
+	if ($listOrder == "name DESC") {
+		$sql =  "SELECT * FROM activities ORDER BY name DESC";
+	}
+	if ($listOrder == "noOfSpaces DESC") {
+		$sql =  "SELECT * FROM activities ORDER BY noOfSpaces DESC";
+	}
+}
+	
+	else {
+		$sql =  "SELECT * FROM activities ORDER BY date";
+	}
+		
+	
+$result = mysqli_query($con, $sql);
+
+while($row = mysqli_fetch_assoc($result)){
+	$image = $row['eventImage'];
+  echo  "<div class='rowActivities'>".
+		"<div class='campusActivities'>".
+		"<div class='activities-col'>".
+		"<img src='img/".$row['eventImage']."' target='_blank'>".
+		"<div class='layer'>".
+		"<a href='eventDetails.php?ID=" .$row["name"]. "'target='_blank'><h3>".$row["name"]."</h3></a>".
+		"<h4>".$row["shortDescription"]."</h4>".
+		"<h5>".date("l d F Y h:i a",strtotime($row["date"]))."</h5>".  
+		"</div>".
+		"</div>".
+		"</div>".
+		"</div>";
+		
+		
+}
+
+?>
+<!--http://www.dynamicdrive.com/forums/showthread.php?69138-How-to-get-date_format()-to-work-properly* used to format date/-->
+
+<footer>
+  <div class="footer-content">
+      <h3>Year of Stories 2023</h3>
+      <p>&copy;2022 Copyright. Keep Calm and Never Copy-Paste Without Permission.  || <a href='adminLogon.php'> Admin </p>
+  </div>
+</footer>
+</body>
+<script language="javaScript">
+	function navBarVisibility() { //function controlling visibility of navbar2 on smaller screens on clicking the burger bar
+		var horiNavBar = document.querySelector(".navBar2");
+		if (horiNavBar.style.display == "block") {
+			horiNavBar.style.display = "none";
+			console.log(horiNavBar);
+		}
+		
+		else {
+			horiNavBar.style.display = "block";
+			console.log(horiNavBar);
+		}
+	}
+</script>

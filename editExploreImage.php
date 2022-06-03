@@ -1,0 +1,14 @@
+<?php
+include "connect.php";
+
+if(isset($_POST["exploreID"])){
+	$exploreID = $_POST["exploreID"];
+}
+
+if(isset($_POST["exploreImage"])){
+	$exploreImage = $_POST["exploreImage"];
+}
+
+$sql = "UPDATE explore SET image = '".$exploreImage."' WHERE ID = '".$exploreID."'";
+mysqli_query($con, $sql);
+header("Location: viewExplorePage.php");
